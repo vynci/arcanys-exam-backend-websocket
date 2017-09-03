@@ -1,7 +1,8 @@
 var server = require('http').createServer();
 var io = require('socket.io')(server);
+var port = Number(process.env.PORT || 4444);
 
-io.on('connection', function(client){
+io.sockets.on('connection', function (client) {
 
   client.on('new-user', function(data){
     console.log(data);
@@ -16,7 +17,6 @@ io.on('connection', function(client){
   client.on('add-message', (message) => {
     io.emit('message/' + message.recipient, message);    
   });
-  
 });
 
-server.listen(3001);
+server.listen(port);
